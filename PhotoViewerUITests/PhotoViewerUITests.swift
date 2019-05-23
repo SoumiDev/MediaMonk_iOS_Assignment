@@ -2,33 +2,38 @@
 //  PhotoViewerUITests.swift
 //  PhotoViewerUITests
 //
-//  Created by Dutta, Soumitra on 22/05/19.
-//  Copyright © 2019 Dutta, Soumitra. All rights reserved.
+//  Created by Dutta, Soumitra on 23/05/19.
+//  Copyright © 2019 Soumitra. All rights reserved.
 //
 
 import XCTest
 
 class PhotoViewerUITests: XCTestCase {
-
+    
+    var app :  XCUIApplication!
+    //let appLaunch = AppLaunch()
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        //self.app.launch()
+        app = XCUIApplication()
+        app.launch()
+        
     }
-
+    
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        // app = nil
     }
-
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    func waitForLoadingViewActivityIndicatorToBeDismiss() {
+        if app.activityIndicators["Loading-View"].exists{
+            self.waitForActivityIndicatorToFinishSpinning(self.app.activityIndicators["Loading-View"], timeout: 100.0)
+        }
     }
-
+    
+    func testWelecomePage() {
+        XCTAssertTrue(app.staticTexts["Photo Viewer \n Experience Amazing Photo App."].exists)
+    }
+    
+    
 }
